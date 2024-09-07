@@ -4,7 +4,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 import Notesate from './context/notestate';
-import Alert from './components/Alert';
+// import Alert from './components/Alert';
 function App() {
   return (
     <>
@@ -12,7 +12,7 @@ function App() {
        
         <Router>
         <Navbar />
-        <Alert/>
+        {/* <Alert/> */}
         <div className="container">
 
        

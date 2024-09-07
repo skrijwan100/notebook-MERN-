@@ -2,8 +2,8 @@
 import notecontext from "./notecontext";
 import { useState } from "react";
 
-const Notesate=(props)=>{
-   let allnotestate=[
+const Notesate = (props) => {
+  let allnotestate = [
     {
       "_id": "66d8bbda9c1e10ddbbc637f3",
       "title": "hallo world",
@@ -28,43 +28,51 @@ const Notesate=(props)=>{
       "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
       "__v": 0
     },
-    {
-      "_id": "66d945f442c9e2d70635cdcb6",
-      "title": "hallo_world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "66d945f4e2c9e2d70635cdcb6",
-      "title": "hallo_world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "66d945f42cd9e2d70635cdcb6",
-      "title": "hallo_world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
 
-
-    
 
   ]
-    const[note,setnote]=useState(allnotestate)
 
-    return(
-        <notecontext.Provider value={{note,setnote}}>
-            {props.children}
-        </notecontext.Provider>
-        
-    )
+// Add note
+// const [notes,setnotes]=useState(allnotestate)
+
+const addnote=(title,disc,tag)=>{
+  const newnote ={
+    "_id":  Math.random().toString(36).substr(2, 9),
+    "title":title,
+    "disc": disc,
+    "tag": tag,
+    "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
+    "__v": 0
+
+  }
+  setnote(note.concat(newnote))
+
+}
+
+// delete note
+
+const deletenote=(id)=>{
+  console.log("delet note id:"+id)
+  const newnote=note.filter((note)=>{return note._id!==id})
+  setnote(newnote)
+
+}
+
+//edite note
+
+const editenote=()=>{
+
+}
+
+
+  const [note, setnote] = useState(allnotestate)
+
+  return (
+    <notecontext.Provider value={{note, addnote,editenote,deletenote}}>
+      {props.children}
+    </notecontext.Provider>
+
+  )
 }
 
 export default Notesate
