@@ -1,74 +1,106 @@
 
+// import { json } from "react-router-dom";
 import notecontext from "./notecontext";
 import { useState } from "react";
 
 const Notesate = (props) => {
-  let allnotestate = [
-    {
-      "_id": "66d8bbda9c1e10ddbbc637f3",
-      "title": "hallo world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 01:28:18 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "66d8bc12w9c1e10ddbbc637f7",
-      "title": "hallo world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 01:29:14 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
-    {
-      "_id": "66d945f42wc9e2d70635cdcb6",
-      "title": "hallo_world",
-      "disc": "i am sk rijwan",
-      "tag": "hwc",
-      "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
-      "__v": 0
-    },
+  const host = "http://localhost:5000/"
+  const allnotestate = []
+  //get all notes 
+  const getallnote = async () => {
+    const url = `${host}api/notes/fectnote`
+    const responce = await fetch(url, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjZkNzYyYjE1NzlhZjliOTIyNDU0M2Q2IiwiaWF0IjoxNzI1Mzk2Mzk1fQ.f_IO__7HS1z_ZJvJGan-RYGIZunArv0c4EaAV2eMBBw",
+
+      },
+
+    })
+    const data = await responce.json()
+    console.log(data);
+    setnote(data)
+  }
 
 
-  ]
+  // Add note
+  // const [notes,setnotes]=useState(allnotestate)
 
-// Add note
-// const [notes,setnotes]=useState(allnotestate)
+  const addnote = async (title, disc, tag) => {
+    const url = `${host}api/notes/addnote`
+    const responce = await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjZkNzYyYjE1NzlhZjliOTIyNDU0M2Q2IiwiaWF0IjoxNzI1Mzk2Mzk1fQ.f_IO__7HS1z_ZJvJGan-RYGIZunArv0c4EaAV2eMBBw",
 
-const addnote=(title,disc,tag)=>{
-  const newnote ={
-    "_id":  Math.random().toString(36).substr(2, 9),
-    "title":title,
-    "disc": disc,
-    "tag": tag,
-    "data": "Thu Sep 05 2024 11:17:32 GMT+0530 (India Standard Time)",
-    "__v": 0
+
+      },
+      body: JSON.stringify({title, disc, tag})
+    })
+    const newnote = await responce.json()
+    console.log(newnote)
+    setnote(note.concat(newnote))
 
   }
-  setnote(note.concat(newnote))
 
-}
+  // delete note
 
-// delete note
+  const deletenote = async (id) => {
 
-const deletenote=(id)=>{
-  console.log("delet note id:"+id)
-  const newnote=note.filter((note)=>{return note._id!==id})
-  setnote(newnote)
+    const url = `${host}api/notes/delete/${id}`
+    const responce = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
 
-}
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjZkNzYyYjE1NzlhZjliOTIyNDU0M2Q2IiwiaWF0IjoxNzI1Mzk2Mzk1fQ.f_IO__7HS1z_ZJvJGan-RYGIZunArv0c4EaAV2eMBBw",
 
-//edite note
+      },
 
-const editenote=()=>{
 
-}
+    })
+    console.log("delet note id:" + id)
+    const newnote = note.filter((note) => { return note._id !== id })
+    setnote(newnote)
+  }
+
+  //edite note
+
+  const editenote = async (id, title, disc, tag) => {
+    //API call
+    const url = `${host}api/notes/update/66d8d12141cd2d57faaae25b`
+    const responce = await fetch(url, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjZkNzYyYjE1NzlhZjliOTIyNDU0M2Q2IiwiaWF0IjoxNzI1Mzk2Mzk1fQ.f_IO__7HS1z_ZJvJGan-RYGIZunArv0c4EaAV2eMBBw",
+
+
+      },
+      body: JSON.stringify(title, disc, tag)
+    })
+    // const json=responce.json()
+
+    //logic edit note
+    for (let index = 0; index < note.length; index++) {
+      const e = note[index];
+      if (e._id === id) {
+        e.title = title
+        e.disc = disc
+        e.tag = tag
+      }
+
+    }
+
+  }
 
 
   const [note, setnote] = useState(allnotestate)
 
   return (
-    <notecontext.Provider value={{note, addnote,editenote,deletenote}}>
+    <notecontext.Provider value={{ note, addnote, editenote, deletenote, getallnote }}>
       {props.children}
     </notecontext.Provider>
 

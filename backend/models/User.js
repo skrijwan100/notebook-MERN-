@@ -17,7 +17,7 @@ const Usershschema = new Schema({
     },
     data:{
         type:String,
-        default:Date,
+        default: Date,
     }
     
  
