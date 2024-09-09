@@ -13,6 +13,7 @@ router.post("/register",[
     body('name',"Enter your name").isLength({ min: 4 }),
     body('password',"Enter a password more then 5 word").isLength({ min: 5 }),
 ], async (req, res) => {
+    const sceuess=true
     console.log(req.body);
     const { name, email, password } = req.body;
     const errors = validationResult(req);
@@ -45,12 +46,12 @@ router.post("/register",[
         },JWT_SECERT)
 
         // Respond with the created user data
-        res.status(201).json({authtoken});
+        res.status(201).json({sceuess,authtoken});
 
     } catch (error) {
         console.error(error);
         // Respond with an error message
-        res.status(500).json({error: "Internal Server Error",});
+        res.status(500).json({sceuess,error: "Internal Server Error",});
     }
 });
 
@@ -60,6 +61,7 @@ router.post("/login",[
     body('email',"Enter a valid email").isEmail(),
     body('password',"Enter the passsword").exists(), 
 ], async (req, res) => {
+    const sceuess=true
     try {
         const {password,email}=req.body
         const error=validationResult(req)
@@ -79,10 +81,11 @@ router.post("/login",[
             user:user.id,
         },JWT_SECERT)
 
-        res.status(201).json({authtoken});
+        res.status(201).json({sceuess,authtoken});
     }catch(error) {
+        sceuess=false
         console.log(error)
-        res.status(500).json({"error":"Intarnal server error"});
+        res.status(500).json({sceuess,"error":"Intarnal server error"});
 
         
     }

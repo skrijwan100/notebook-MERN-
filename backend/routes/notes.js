@@ -17,8 +17,6 @@ router.get("/fectnote", fetchuser, async (req, res) => {
         res.status(500).json({ error: "Internal Server Error", });
 
     }
-
-
 })
 //Route 2 :add note from user note
 

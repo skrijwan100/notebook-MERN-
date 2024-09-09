@@ -1,12 +1,12 @@
 import React from 'react'
 // import { useEffect } from 'react';
 
-import {Link,useLocation} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 
 export default function Navbar() {
-  let loction =useLocation()
+  let loction = useLocation()
   // useEffect(()=>{
   //  console.log(loction.pathname)
   // },[loction])
@@ -21,16 +21,17 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className={`nav-link ${loction.pathname==="/"?"active":""} `} aria-current="page" to="/">Home</Link>
+                <Link className={`nav-link ${loction.pathname === "/" ? "active" : ""} `} aria-current="page" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link ${loction.pathname==="/about"?"active":""} `} to="/about">about</Link>
+                <Link className={`nav-link ${loction.pathname === "/about" ? "active" : ""} `} to="/about">about</Link>
               </li>
             </ul>
+            <Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
+            <Link className="btn btn-outline-info" to="/singup" role="button">Singup</Link>
           </div>
         </div>
       </nav>
-
     </div>
   )
 }

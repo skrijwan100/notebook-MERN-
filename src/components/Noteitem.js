@@ -14,6 +14,7 @@ export default function Noteitem(props) {
                     <div className="card-body">
                         <h5 className="card-title">{note.title}</h5>
                         <p className="card-text">{note.disc}</p>
+                        <p className="card-text">{note.tag}</p>
                         <p className="card-text">{note.data}</p>
                         <div className="d-flex justify-content-between">
                             <lord-icon className="mx-3 "

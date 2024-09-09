@@ -13,24 +13,25 @@ export default function Addnote() {
     e.preventDefault();
     // console.log("Form submitted:", note.title);
     addnote(note.title,note.disc,note.tag)
+    setnote({title:"",disc:"",tag:""})
   }
   return (
     <div className=" my-3">
     <h1>Add a note</h1>
-    <form>
+    <form >
       <div className="mb-3">
         <label htmlFor="title" className="form-label">Title</label>
-        <input type="text" className="form-control" id="title" name='title' onChange={onchange} />
+        <input required type="text" className="form-control" id="title" name='title'value={note.title} onChange={onchange}  />
       </div>
       <div className="mb-3">
         <label htmlFor="discripstion" className="form-label">Description</label>
-        <input type="text" className="form-control" id="disc" name='disc' onChange={onchange} />
+        <input required  type="text" className="form-control" id="disc" name='disc' value={note.disc} onChange={onchange} />
       </div>
       <div className="mb-3">
         <label htmlFor="tag" className="form-label">Tag</label>
-        <input type="text" className="form-control" id="tag" name='tag' onChange={onchange} />
+        <input required type="text" className="form-control" id="tag" name='tag' value={note.tag} onChange={onchange}  />
       </div>
-      <button type="submit" className="btn btn-primary" onClick={handleclick}>Submit</button>
+      <button disabled={note.title.length<5 || note.disc.length<5} type="submit" className="btn btn-primary" onClick={handleclick}>Submit</button>
     </form>
   </div>
   )

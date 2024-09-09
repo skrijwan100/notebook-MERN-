@@ -67,7 +67,7 @@ export default function Note(props) {
       </div>
       <div className="modal-footer">
         <button ref={refclose}type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button onClick={handleclick} type="button" className="btn btn-primary">Update note</button>
+        <button disabled={notes.etitle.length<5 || notes.edisc.length<5} onClick={handleclick} type="button" className="btn btn-primary">Update note</button>
       </div>
     </div>
   </div>
@@ -76,6 +76,8 @@ export default function Note(props) {
     <div>
       <div className="row my-3 d-flex" style={{ backgroundColor: "#0dcaf0" }}>
         <center style={{ backgroundColor: "#rgb(13 240 95)" }}><h1>Your note</h1></center>
+        <div className="container text-center my-3 fs-3 fw-bold c-red " style={{color:"#0100ff"}}>
+        {note.length===0 && "NO NOTE TO SHOW"}</div>
         {note.map((note) => {
           return <Noteitem key={`${note._id}`} updatenote={updatenote} note={note} />
         })}
