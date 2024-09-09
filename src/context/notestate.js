@@ -70,30 +70,33 @@ const Notesate = (props) => {
 
   const editenote = async (id, title, disc, tag) => {
     //API call
-    const url = `${host}api/notes/update/66d8d12141cd2d57faaae25b`
+    console.log(id)
+    const url = `${host}api/notes/update/${id}`
     const responce = await fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjZkNzYyYjE1NzlhZjliOTIyNDU0M2Q2IiwiaWF0IjoxNzI1Mzk2Mzk1fQ.f_IO__7HS1z_ZJvJGan-RYGIZunArv0c4EaAV2eMBBw",
 
-
       },
-      body: JSON.stringify(title, disc, tag)
+      body: JSON.stringify({title, disc, tag})
     })
-    // const json=responce.json()
+    const json=await responce.json()
+
+    const newnote=JSON.parse(JSON.stringify(note))
 
     //logic edit note
-    for (let index = 0; index < note.length; index++) {
+    for (let index = 0; index < newnote.length; index++) {
       const e = note[index];
       if (e._id === id) {
-        e.title = title
-        e.disc = disc
-        e.tag = tag
+        newnote[index].title = title
+        newnote[index].disc = disc
+        newnote[index].tag = tag
+        break;
       }
 
     }
-
+   setnote(newnote)
   }
 
 

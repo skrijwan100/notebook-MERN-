@@ -4,9 +4,9 @@ import { useContext } from 'react'
 
 export default function Noteitem(props) {
     const contextnotes = useContext(Notecontext)
-    const { deletenote } = contextnotes
+    const { deletenote} = contextnotes
 
-    const { note } = props
+    const { note,updatenote  } = props
     return (
         
             <div className='col-md-3 my-3'>
@@ -25,7 +25,7 @@ export default function Noteitem(props) {
                                 src="https://cdn.lordicon.com/wuvorxbv.json"
                                 trigger="hover"
                                 state="hover-line"
-                                style={{ width: "250px;height:250px" }}>
+                                style={{ width: "250px;height:250px" }} onClick={()=>updatenote(note)}>
                             </lord-icon>
                         </div>
                     </div>

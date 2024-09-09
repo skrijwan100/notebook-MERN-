@@ -1,35 +1,73 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef,useState } from 'react'
 import Notecontext from '../context/notecontext'
 import { useContext } from 'react'
 import Noteitem from './Noteitem'
 import Addnote from './Addnote'
-export default function Note() {
+export default function Note(props) {
   const contextnotes = useContext(Notecontext)
-  const { note,getallnote } = contextnotes
+  const { note,getallnote,editenote } = contextnotes
+ 
+  const[notes,setnotes]=useState({id:"",etitle:"",edisc:"",etag:""})
+  // console.log(notes)
+  const onchange = (e) => {
+    setnotes((prevNotes) => ({
+      ...prevNotes, 
+      [e.target.name]: e.target.value
+    }));
+  };
+  const handleclick=(e)=>{
+
+    editenote(notes.id,notes.etitle,notes.edisc,notes.etag)
+    refclose.current.click()
+    console.log("Form submitted:", notes.etitle);
+    // addnote(note.title,note.disc,note.tag)
+  }
   useEffect(()=>{
     getallnote()
   },[])
+  const updatenote=(currentnode)=>{
+    ref.current.click()
+    setnotes({id:currentnode._id,etitle:currentnode.title,edisc:currentnode.disc,etag:currentnode.tag})
+
+
+  }
+  const ref=useRef(null)
+  const refclose=useRef(null)
   return (
     <>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" className="btn btn-primary d-none" ref={ref} data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
 </button>
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div className="modal fade" id="exampleModal"  tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h1 className="modal-title fs-5" id="exampleModalLabel">Update Note</h1>
+        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...
+      <div className="modal-body">
+      <form>
+      <div className="mb-3">
+        <label htmlFor="etitle" className="form-label">Title</label>
+        <input type="text" className="form-control" id="etitle" name='etitle' value={notes.etitle} onChange={onchange} />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      <div className="mb-3">
+        <label htmlFor="ediscripstion" className="form-label">Description</label>
+        <input type="text" className="form-control" id="edisc" name='edisc' value={notes.edisc} onChange={onchange} />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="etag" className="form-label">Tag</label>
+        <input type="text" className="form-control" id="etag" name='etag' value={notes.etag} onChange={onchange} />
+      </div>
+    </form>
+      
+      </div>
+      <div className="modal-footer">
+        <button ref={refclose}type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button onClick={handleclick} type="button" className="btn btn-primary">Update note</button>
       </div>
     </div>
   </div>
@@ -39,7 +77,7 @@ export default function Note() {
       <div className="row my-3 d-flex" style={{ backgroundColor: "#0dcaf0" }}>
         <center style={{ backgroundColor: "#rgb(13 240 95)" }}><h1>Your note</h1></center>
         {note.map((note) => {
-          return <Noteitem key={`${note._id}`}  note={note} />
+          return <Noteitem key={`${note._id}`} updatenote={updatenote} note={note} />
         })}
 
       </div>
