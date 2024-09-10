@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 
-export default function Login() {
+export default function Login(props) {
     const[authuser,setauthuser]=useState({email:"",password:""})
     const navigate=useNavigate()
+    const{showAlert}=props
 
 
     const handleclick=async(e)=>{
@@ -21,12 +22,13 @@ export default function Login() {
         console.log(data)
         if(data.sceuess){
             localStorage.setItem('token',data.authtoken)
+            showAlert("successfuly login","success")
             navigate("/")
            
             
         }
         else{
-            alert("Invaid password or email")
+            showAlert("Invaid password or email","danger")
         }
 
 

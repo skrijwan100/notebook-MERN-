@@ -1,12 +1,17 @@
 import React from 'react'
 // import { useEffect } from 'react';
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 
 export default function Navbar() {
   let loction = useLocation()
+  let naviget=useNavigate()
+  const handlelogout=()=>{
+    localStorage.removeItem('token')
+    naviget("/login")
+  }
   // useEffect(()=>{
   //  console.log(loction.pathname)
   // },[loction])
@@ -27,8 +32,8 @@ export default function Navbar() {
                 <Link className={`nav-link ${loction.pathname === "/about" ? "active" : ""} `} to="/about">about</Link>
               </li>
             </ul>
-            <Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
-            <Link className="btn btn-outline-info" to="/singup" role="button">Singup</Link>
+          {!localStorage.getItem('token')?<div><Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
+            <Link className="btn btn-outline-info" to="/singup" role="button">Singup</Link></div>: <button onClick={handlelogout} className='btn btn-outline-primary'>Logout</button>}
           </div>
         </div>
       </nav>

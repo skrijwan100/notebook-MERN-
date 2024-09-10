@@ -2,10 +2,10 @@ import React from 'react'
 import { useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function Singup() {
+export default function Singup(props) {
     const[authuser,setauthuser]=useState({name:"",email:"",password:""})
     const navigate=useNavigate()
-
+   const {showAlert}=props
 
     const handleclick=async(e)=>{
         e.preventDefault()
@@ -21,12 +21,13 @@ export default function Singup() {
         console.log(data)
         if(data.sceuess){
             localStorage.setItem('token',data.authtoken)
+            showAlert("Successfuly singup","success")
             navigate("/")
-           
             
         }
         else{
-            alert("Invaid password or email")
+          
+            showAlert("Invaid password or email","danger")
         }
 
 

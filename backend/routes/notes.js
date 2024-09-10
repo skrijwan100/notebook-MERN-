@@ -53,51 +53,58 @@ router.post("/addnote", fetchuser, [[
 //Route 2 :update note from user note
 router.put("/update/:id", fetchuser, async (req, res) => {
     const { title, disc, tag } = req.body;
+    const newNote = {};
 
-    const newnote = {}
+    if (title) { newNote.title = title; }
+    if (disc) { newNote.disc = disc; }
+    if (tag) { newNote.tag = tag; }
 
-    if (title) { newnote.title = title }
-    if (disc) { newnote.disc = disc }
-    if (tag) { newnote.tag = tag }
     try {
+        // Find the note by ID
+        let note = await Notes.findById(req.params.id);
 
-
-
-        let note = await Notes.findById(req.params.id)
-        //    console.log(note)
-        //    console.log(req.user)
-        //    console.log(note)
+        // If the note doesn't exist
         if (!note) {
-            return res.status(404).send("NOT FOUND")
+            return res.status(404).send("Note not found.");
         }
 
-        // if(note.user !== req.user){
-        //     return res.status(401).send("not allowed")
+        // Ensure the user updating the note is the owner of the note
+        // if (!note.user || note.user.toString() !== req.user.id) {
+        //     return res.status(401).send("Not authorized.");
         // }
 
-        note = await Notes.findByIdAndUpdate(req.params.id, { $set: newnote }, { new: true })
-        res.json(note)
+        // Update the note
+        note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
+        res.json(note);
     } catch (error) {
-        res.status(500).json({ error: "Internal Server Error or id is wrong", });
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error or ID is wrong." });
     }
-
-})
+});
 
 //Route 2 : Delete a  note from user note
 router.delete("/delete/:id", fetchuser, async (req, res) => {
     try {
-    let note = await Notes.findById(req.params.id)
-    if(!note){
-        return res.status(404).send("NOT FOUND.")
-    }
-     let notess= await Notes.findByIdAndDelete(req.params.id)
-     res.status(200).send("Scuessfully  delete the notes")
-    //  console.log(notess)
-    } catch (error) {
-        res.status(500).json({ error: "Internal Server Error or id is wrong", });
-        
-    }
+        // Find the note by ID
+        let note = await Notes.findById(req.params.id);
 
-})
+        // If the note doesn't exist
+        if (!note) {
+            return res.status(404).send("Note not found.");
+        }
+
+        // Ensure the user deleting the note is the owner of the note
+        // if (note.user.toString() !== req.user.id) {
+        //     return res.status(401).send("Not authorized.");
+        // }
+
+        // Delete the note
+        await Notes.findByIdAndDelete(req.params.id);
+        res.status(200).send("Successfully deleted the note.");
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error or ID is wrong." });
+    }
+});
 
 module.exports = router

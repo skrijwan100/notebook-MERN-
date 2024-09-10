@@ -3,12 +3,16 @@ import Notecontext from '../context/notecontext'
 import { useContext } from 'react'
 import Noteitem from './Noteitem'
 import Addnote from './Addnote'
+import { Navigate, useNavigate } from 'react-router-dom'
 export default function Note(props) {
+  const{showAlert}=props
   const contextnotes = useContext(Notecontext)
   const { note,getallnote,editenote } = contextnotes
+
  
   const[notes,setnotes]=useState({id:"",etitle:"",edisc:"",etag:""})
   // console.log(notes)
+  let naviget=useNavigate()
   const onchange = (e) => {
     setnotes((prevNotes) => ({
       ...prevNotes, 
@@ -18,12 +22,20 @@ export default function Note(props) {
   const handleclick=(e)=>{
 
     editenote(notes.id,notes.etitle,notes.edisc,notes.etag)
+    showAlert("update successful","success")
     refclose.current.click()
     console.log("Form submitted:", notes.etitle);
     // addnote(note.title,note.disc,note.tag)
   }
   useEffect(()=>{
-    getallnote()
+    if(localStorage.getItem('token')){
+
+      getallnote()
+    }
+    else{
+      naviget("/login")
+
+    }
   },[])
   const updatenote=(currentnode)=>{
     ref.current.click()
@@ -72,14 +84,18 @@ export default function Note(props) {
     </div>
   </div>
 </div>
-      <Addnote/>
+      <Addnote showAlert={showAlert}/>
     <div>
       <div className="row my-3 d-flex" style={{ backgroundColor: "#0dcaf0" }}>
         <center style={{ backgroundColor: "#rgb(13 240 95)" }}><h1>Your note</h1></center>
         <div className="container text-center my-3 fs-3 fw-bold c-red " style={{color:"#0100ff"}}>
         {note.length===0 && "NO NOTE TO SHOW"}</div>
         {note.map((note) => {
-          return <Noteitem key={`${note._id}`} updatenote={updatenote} note={note} />
+          return (
+          
+
+              <Noteitem key={`${note._id}`} updatenote={updatenote} note={note} showAlert={showAlert} />
+          ) 
         })}
 
       </div>

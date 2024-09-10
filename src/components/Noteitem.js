@@ -6,7 +6,7 @@ export default function Noteitem(props) {
     const contextnotes = useContext(Notecontext)
     const { deletenote} = contextnotes
 
-    const { note,updatenote  } = props
+    const { note,updatenote,showAlert  } = props
     return (
         
             <div className='col-md-3 my-3'>
@@ -20,7 +20,8 @@ export default function Noteitem(props) {
                             <lord-icon className="mx-3 "
                                 src="https://cdn.lordicon.com/drxwpfop.json"
                                 trigger="hover"
-                                style={{ width: "250px;height:250px" }} onClick={()=>deletenote(note._id)}>
+                                style={{ width: "250px;height:250px" }} onClick={()=>{deletenote(note._id);
+                                showAlert("delete note","success")}} >
                             </lord-icon>
                             <lord-icon
                                 src="https://cdn.lordicon.com/wuvorxbv.json"
