@@ -4,11 +4,10 @@ import notecontext from "./notecontext";
 import { useState } from "react";
 
 const Notesate = (props) => {
-  const host = "http://localhost:5000/"
   const allnotestate = []
   //get all notes 
   const getallnote = async () => {
-    const url = `${host}api/notes/fectnote`
+    const url = `https://notebook-mern.vercel.app/api/notes/fectnote`
     const responce = await fetch(url, {
       method: 'GET',
       headers: {
@@ -28,7 +27,7 @@ const Notesate = (props) => {
   // const [notes,setnotes]=useState(allnotestate)
 
   const addnote = async (title, disc, tag) => {
-    const url = `${host}api/notes/addnote`
+    const url = `https://notebook-mern.vercel.app/api/notes/addnote`
     const responce = await fetch(url, {
       method: 'POST',
       headers: {
@@ -37,7 +36,7 @@ const Notesate = (props) => {
 
 
       },
-      body: JSON.stringify({title, disc, tag})
+      body: JSON.stringify({ title, disc, tag })
     })
     const newnote = await responce.json()
     console.log(newnote)
@@ -49,18 +48,18 @@ const Notesate = (props) => {
 
   const deletenote = async (id) => {
 
-    const url = `${host}api/notes/delete/${id}`
+    const url = `https://notebook-mern.vercel.app/api/notes/delete/${id}`
     const responce = await fetch(url, {
       method: 'DELETE',
       headers: {
         "Content-Type": "application/json",
 
-        "auth-token":localStorage.getItem('token'),
+        "auth-token": localStorage.getItem('token'),
 
       },
-
-
+      
     })
+    console.log(responce)
     console.log("delet note id:" + id)
     const newnote = note.filter((note) => { return note._id !== id })
     setnote(newnote)
@@ -71,7 +70,7 @@ const Notesate = (props) => {
   const editenote = async (id, title, disc, tag) => {
     //API call
     console.log(id)
-    const url = `${host}api/notes/update/${id}`
+    const url = `https://notebook-mern.vercel.app/notes/update/${id}`
     const responce = await fetch(url, {
       method: 'PUT',
       headers: {
@@ -79,11 +78,12 @@ const Notesate = (props) => {
         "auth-token": localStorage.getItem('token'),
 
       },
-      body: JSON.stringify({title, disc, tag})
+      body: JSON.stringify({ title, disc, tag })
     })
-    const json=await responce.json()
+    const json = await responce.json()
+    console.log(json)
 
-    const newnote=JSON.parse(JSON.stringify(note))
+    const newnote = JSON.parse(JSON.stringify(note))
 
     //logic edit note
     for (let index = 0; index < newnote.length; index++) {
@@ -96,7 +96,7 @@ const Notesate = (props) => {
       }
 
     }
-   setnote(newnote)
+    setnote(newnote)
   }
 
 

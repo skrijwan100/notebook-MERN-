@@ -9,7 +9,7 @@ export default function Singup(props) {
 
     const handleclick=async(e)=>{
         e.preventDefault()
-        let url=`http://localhost:5000/api/auth/register`
+        let url=`https://notebook-mern.vercel.app/api/auth/register`
         const responce= await fetch(url,{
             method:'POST',
             headers:{

@@ -5,8 +5,7 @@ export default function About() {
 
   return (
     <div>
-      This is about page
-      
+     <h1> I am sk rijwan. This is my test priject. Thank you !</h1>
     </div>
   )
 }
