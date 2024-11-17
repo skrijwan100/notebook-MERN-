@@ -5,12 +5,13 @@ const app = express()
 const PORT = process.env.PORT || 5000;
 
 server()
-require('dotenv').config();
+// require('dotenv').config();
 app.use(express.json())
 
 
 app.use(cors({
   origin: 'https://notebook-mern.vercel.app',  // Allow requests only from frontend
+  // origin: 'http://localhost:3000',  // Allow requests only from frontend
   methods: 'GET, POST, PUT, DELETE', // Allow specific methods
   allowedHeaders: 'Content-Type, Authorization, auth-token', // Add allowed headers
   credentials: true, // Allow credentials like cookies or authentication headers
