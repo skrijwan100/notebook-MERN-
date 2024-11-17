@@ -2,10 +2,11 @@ const server=require('./db')
 var cors = require('cors')
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 5000;
+// const PORT = 'https://notebook-mern.vercel.app' ;
+const PORT = 5000 ;
 
 server()
-// require('dotenv').config();
+require('dotenv').config();
 app.use(express.json())
 
 
