@@ -3,7 +3,7 @@ import Notecontext from '../context/notecontext'
 import { useContext } from 'react'
 import Noteitem from './Noteitem'
 import Addnote from './Addnote'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 export default function Note(props) {
   const{showAlert}=props
   const contextnotes = useContext(Notecontext)
@@ -27,16 +27,13 @@ export default function Note(props) {
     console.log("Form submitted:", notes.etitle);
     // addnote(note.title,note.disc,note.tag)
   }
-  useEffect(()=>{
-    if(localStorage.getItem('token')){
-
-      getallnote()
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      getallnote();
+    } else {
+      naviget("/login");
     }
-    else{
-      naviget("/login")
-
-    }
-  },[])
+  }, [getallnote, naviget]);
   const updatenote=(currentnode)=>{
     ref.current.click()
     setnotes({id:currentnode._id,etitle:currentnode.title,edisc:currentnode.disc,etag:currentnode.tag})

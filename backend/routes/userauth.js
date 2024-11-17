@@ -5,7 +5,8 @@ const { body, validationResult } = require('express-validator')
 var jwt = require('jsonwebtoken');
 const User = require("../models/User");
 const fetchuser=require("../middleware/fecthuser")
-JWT_SECERT="qp^)#gz*VNI"
+// JWT_SECERT= process.env.JWT_SECERT
+JWT_SECERT='qp^)#gz*VNI'
 
 // Route to register a new user
 router.post("/register",[

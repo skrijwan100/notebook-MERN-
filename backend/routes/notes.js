@@ -7,14 +7,14 @@ const router = express.Router()
 router.get("/fectnote", fetchuser, async (req, res) => {
 
     try {
-        const note = await Notes.find({ user: req.user.id })
+        const note = await Notes.find({ user:req.user })
 
-        res.json(note)
+       return res.json(note)
 
     } catch (error) {
         // Respond with an error message
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error", });
+       return res.status(500).json({ error: "Internal Server Error", });
 
     }
 })
@@ -33,7 +33,7 @@ router.post("/addnote", fetchuser, [[
     try {
         const note = await new Notes({
             title, disc, tag,
-            user: req.user.id
+            user: req.user
 
         })
         savenote = await note.save()
@@ -69,9 +69,9 @@ router.put("/update/:id", fetchuser, async (req, res) => {
         }
 
         // Ensure the user updating the note is the owner of the note
-        // if (!note.user || note.user.toString() !== req.user.id) {
-        //     return res.status(401).send("Not authorized.");
-        // }
+          if (note.user._id.toString() !== req.user.id) {
+            return res.status(401).send("Not authorized.");
+        }
 
         // Update the note
         note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });

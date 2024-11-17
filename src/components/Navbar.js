@@ -6,7 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 export default function Navbar() {
-  let loction = useLocation()
+  let loction = useLocation()  
   let naviget=useNavigate()
   const handlelogout=()=>{
     localStorage.removeItem('token')
@@ -33,7 +33,7 @@ export default function Navbar() {
               </li>
             </ul>
           {!localStorage.getItem('token')?<div><Link className="btn btn-outline-primary mx-2" to="/login" role="button">Login</Link>
-            <Link className="btn btn-outline-info" to="/singup" role="button">Singup</Link></div>: <button onClick={handlelogout} className='btn btn-outline-primary'>Logout</button>}
+            <Link className="btn btn-outline-info" to="/singup" role="button">Singup</Link></div>: <div><button onClick={handlelogout} className='btn btn-outline-primary'>Logout</button> <button className='btn btn-outline-primary'>user name</button></div>}
           </div>
         </div>
       </nav>
