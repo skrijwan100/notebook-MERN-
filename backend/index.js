@@ -4,9 +4,9 @@ const express = require('express')
 const app = express()
 // const PORT = 'https://notebook-mern.vercel.app' ;
 const PORT = 5000 ;
+require('dotenv').config();
 
 server()
-require('dotenv').config();
 app.use(express.json())
 
 
