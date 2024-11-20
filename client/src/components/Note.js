@@ -33,7 +33,7 @@ export default function Note(props) {
     } else {
       naviget("/login");
     }
-  }, [getallnote, naviget]);
+  }, [ naviget]);
   const updatenote=(currentnode)=>{
     ref.current.click()
     setnotes({id:currentnode._id,etitle:currentnode.title,edisc:currentnode.disc,etag:currentnode.tag})

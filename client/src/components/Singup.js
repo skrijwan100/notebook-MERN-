@@ -3,13 +3,14 @@ import { useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Singup(props) {
+  console.log(process.env)
     const[authuser,setauthuser]=useState({name:"",email:"",password:""})
     const navigate=useNavigate()
    const {showAlert}=props
 
     const handleclick=async(e)=>{
         e.preventDefault()
-        let url=`https://notebook-mern.vercel.app/api/auth/register`
+        let url=`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`
         const responce= await fetch(url,{
             method:'POST',
             headers:{

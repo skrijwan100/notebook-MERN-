@@ -12,6 +12,7 @@ export default function Addnote(props) {
   }
   const handleclick=(e)=>{
     e.preventDefault();
+    console.log("hello")
     // console.log("Form submitted:", note.title);
     addnote(note.title,note.disc,note.tag)
     showAlert("Note Scuessfully added","success")

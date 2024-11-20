@@ -7,7 +7,7 @@ const Notesate = (props) => {
   const allnotestate = []
   //get all notes 
   const getallnote = async () => {
-    const url = `https://notebook-mern.vercel.app/api/notes/fectnote`
+    const url = `${process.env.REACT_APP_BACKEND_URL}/api/notes/fectnote`
     const responce = await fetch(url, {
       method: 'GET',
       headers: {
@@ -27,7 +27,7 @@ const Notesate = (props) => {
   // const [notes,setnotes]=useState(allnotestate)
 
   const addnote = async (title, disc, tag) => {
-    const url = `https://notebook-mern.vercel.app/api/notes/addnote`
+    const url = `${process.env.REACT_APP_BACKEND_URL}/api/notes/addnote`
     const responce = await fetch(url, {
       method: 'POST',
       headers: {
@@ -48,7 +48,7 @@ const Notesate = (props) => {
 
   const deletenote = async (id) => {
 
-    const url = `https://notebook-mern.vercel.app/api/notes/delete/${id}`
+    const url = `${process.env.REACT_APP_BACKEND_URL}/api/notes/delete/${id}`
     const responce = await fetch(url, {
       method: 'DELETE',
       headers: {
@@ -70,7 +70,7 @@ const Notesate = (props) => {
   const editenote = async (id, title, disc, tag) => {
     //API call
     console.log(id)
-    const url = `https://notebook-mern.vercel.app/notes/update/${id}`
+    const url = `${process.env.REACT_APP_BACKEND_URL}/api/notes/update/${id}`
     const responce = await fetch(url, {
       method: 'PUT',
       headers: {

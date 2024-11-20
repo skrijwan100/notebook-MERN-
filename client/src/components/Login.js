@@ -10,7 +10,7 @@ export default function Login(props) {
 
     const handleclick=async(e)=>{
         e.preventDefault()
-        let url=`https://notebook-mern.vercel.app/api/auth/login`
+        let url=`${process.env.REACT_APP_BACKEND_URL}/api/auth/login`
         const responce= await fetch(url,{
             method:'POST',
             headers:{

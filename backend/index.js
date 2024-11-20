@@ -11,8 +11,8 @@ app.use(express.json())
 
 
 app.use(cors({
-  origin: 'https://notebook-mern-pi8g.vercel.app',  // Allow requests only from frontend
-  // origin: 'http://localhost:3000',  // Allow requests only from frontend
+  // origin: 'https://notebook-mern-pi8g.vercel.app',  // Allow requests only from frontend
+  origin: `${process.env.FRONTEND_URL}`,  // Allow requests only from frontend
   methods: 'GET, POST, PUT, DELETE', // Allow specific methods
   allowedHeaders: 'Content-Type, Authorization, auth-token', // Add allowed headers
   credentials: true, // Allow credentials like cookies or authentication headers
